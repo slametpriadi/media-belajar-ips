@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif IPS Kelas 8 - BAB 1</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: font-size 0.3s ease;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- KONFIGURASI GURU (Dapat diedit oleh guru) -->
+    <script>
+        window.TEACHER_CONFIG = {
+            schoolName: "SMP Negeri 1 Nusantara",
+            teacherName: "Tim Guru IPS Profesional",
+            subject: "Ilmu Pengetahuan Sosial (IPS)",
+            grade: "VIII (Delapan)",
+            chapter: "BAB 1 – Proses Geografis dan Keragaman Sosial Budaya",
+            kkm: 75
+        };
+    </script>
+
+    <!-- Custom Toast / Modal Notification (No alert() used) -->
+    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <!-- Header Utama -->
+    <header class="bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-700 text-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white/10 p-2 rounded-xl backdrop-blur-md flex items-center justify-center shadow-inner">
+                    <i class="fa-solid fa-earth-asia text-2xl text-amber-300 animate-pulse"></i>
+                </div>
+                <div>
+                    <h1 class="font-heading font-bold text-lg sm:text-xl tracking-tight leading-snug">IPS Kelas 8 - BAB 1</h1>
+                    <p class="text-xs text-indigo-200 hidden sm:block">Proses Geografis & Keragaman Sosial Budaya</p>
+                </div>
+            </div>
+
+            <!-- Header Quick Stats & Controls -->
+            <div class="flex items-center space-x-3 sm:space-x-4">
+                <!-- Gamification Badge Indicator -->
+                <div class="hidden md:flex items-center bg-white/10 px-3 py-1.5 rounded-full border border-white/20 text-xs gap-2">
+                    <i class="fa-solid fa-star text-amber-300"></i>
+                    <span id="header-points" class="font-bold">0 Poin</span>
+                    <span class="text-indigo-300">|</span>
+                    <i class="fa-solid fa-trophy text-yellow-300"></i>
+                    <span id="header-badge" class="font-medium truncate max-w-[120px]">Penjelajah</span>
+                </div>
+
+                <!-- Text Size Adjuster -->
+                <div class="hidden lg:flex items-center bg-white/10 rounded-lg p-1 text-xs gap-1 border border-white/20">
+                    <button onclick="changeFontSize('sm')" class="px-2 py-1 hover:bg-white/20 rounded transition" title="Perkecil Teks">A-</button>
+                    <button onclick="changeFontSize('md')" class="px-2 py-1 hover:bg-white/20 rounded transition font-bold" title="Normal">A</button>
+                    <button onclick="changeFontSize('lg')" class="px-2 py-1 hover:bg-white/20 rounded transition" title="Perbesar Teks">A+</button>
+                </div>
+
+                <!-- Audio Mute Toggle -->
+                <button onclick="toggleAudio()" id="audio-toggle-btn" class="p-2 bg-white/10 hover:bg-white/20 rounded-xl transition border border-white/20 text-sm" title="Aktifkan/Matikan Suara Efek">
+                    <i class="fa-solid fa-volume-high" id="audio-icon"></i>
+                </button>
+
+                <!-- Teacher Mode Button -->
+                <button onclick="switchView('view-guru')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 px-3 py-1.5 rounded-xl font-heading font-bold text-xs sm:text-sm shadow transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <span class="hidden sm:inline">Mode Guru</span>
+                </button>
+
+                <!-- Mobile Menu Hamburger -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-white hover:bg-white/10 rounded-lg">
+                    <i class="fa-solid fa-bars text-xl" id="hamburger-icon"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-indigo-900/95 border-t border-indigo-800 px-4 py-3 space-y-2 backdrop-blur-lg">
+            <div class="flex justify-between items-center py-1 border-b border-indigo-800 text-xs text-indigo-300">
+                <span>Poin: <strong id="mobile-points" class="text-white">0</strong></span>
+                <span>Badge: <strong id="mobile-badge" class="text-amber-300">Penjelajah</strong></span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 pt-2">
+                <button onclick="switchView('view-beranda'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-house w-5 text-indigo-300"></i> Beranda</button>
+                <button onclick="switchView('view-materi'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-book-open w-5 text-indigo-300"></i> Materi</button>
+                <button onclick="switchView('view-eksplorasi'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-map-location-dot w-5 text-indigo-300"></i> Eksplorasi</button>
+                <button onclick="switchView('view-keragaman'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-users w-5 text-indigo-300"></i> Keragaman</button>
+                <button onclick="switchView('view-simulasi'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-sliders w-5 text-indigo-300"></i> Simulasi</button>
+                <button onclick="switchView('view-aktivitas'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-puzzle-piece w-5 text-indigo-300"></i> Aktivitas</button>
+                <button onclick="switchView('view-latihan'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-pen-to-square w-5 text-indigo-300"></i> Latihan</button>
+                <button onclick="switchView('view-kuis'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-bullseye w-5 text-indigo-300"></i> Kuis</button>
+                <button onclick="switchView('view-game'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-gamepad w-5 text-indigo-300"></i> Game</button>
+                <button onclick="switchView('view-refleksi'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-comments w-5 text-indigo-300"></i> Refleksi</button>
+                <button onclick="switchView('view-evaluasi'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-clipboard-check w-5 text-indigo-300"></i> Evaluasi</button>
+                <button onclick="switchView('view-hasil'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2"><i class="fa-solid fa-chart-pie w-5 text-indigo-300"></i> Hasil Belajar</button>
+                <button onclick="switchView('view-petunjuk'); toggleMobileMenu();" class="text-left px-3 py-2 rounded-lg hover:bg-indigo-800 text-sm flex items-center gap-2 col-span-2"><i class="fa-solid fa-circle-info w-5 text-indigo-300"></i> Petunjuk & Aksesibilitas</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout Utama: Sidebar & Konten -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow w-full flex gap-8">
+        
+        <!-- Sidebar Navigasi Desktop -->
+        <aside class="hidden lg:block w-72 flex-shrink-0">
+            <div class="sticky top-24 glass-card rounded-2xl shadow-sm p-4 border border-slate-200">
+                <div class="px-3 py-2 mb-2">
+                    <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Menu Pembelajaran</span>
+                </div>
+                <nav class="space-y-1" id="desktop-nav">
+                    <button onclick="switchView('view-beranda')" data-target="view-beranda" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition bg-indigo-600 text-white shadow-sm">
+                        <i class="fa-solid fa-house w-5 text-center"></i> Beranda
+                    </button>
+                    <button onclick="switchView('view-materi')" data-target="view-materi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-book-open w-5 text-center"></i> Materi
+                    </button>
+                    <button onclick="switchView('view-eksplorasi')" data-target="view-eksplorasi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-map-location-dot w-5 text-center"></i> Eksplorasi Geografis
+                    </button>
+                    <button onclick="switchView('view-keragaman')" data-target="view-keragaman" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-users w-5 text-center"></i> Keragaman Sosial Budaya
+                    </button>
+                    <button onclick="switchView('view-simulasi')" data-target="view-simulasi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-sliders w-5 text-center"></i> Simulasi Geografis
+                    </button>
+                    <button onclick="switchView('view-aktivitas')" data-target="view-aktivitas" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-puzzle-piece w-5 text-center"></i> Aktivitas Interaktif
+                    </button>
+                    <button onclick="switchView('view-latihan')" data-target="view-latihan" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-pen-to-square w-5 text-center"></i> Latihan Soal
+                    </button>
+                    <button onclick="switchView('view-kuis')" data-target="view-kuis" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-bullseye w-5 text-center"></i> Kuis Interaktif
+                    </button>
+                    <button onclick="switchView('view-game')" data-target="view-game" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-gamepad w-5 text-center"></i> Game Edukatif
+                    </button>
+                    <button onclick="switchView('view-refleksi')" data-target="view-refleksi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-comments w-5 text-center"></i> Refleksi
+                    </button>
+                    <button onclick="switchView('view-evaluasi')" data-target="view-evaluasi" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-clipboard-check w-5 text-center"></i> Evaluasi Akhir
+                    </button>
+                    <button onclick="switchView('view-hasil')" data-target="view-hasil" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-chart-pie w-5 text-center"></i> Hasil Belajar
+                    </button>
+                    <button onclick="switchView('view-petunjuk')" data-target="view-petunjuk" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition">
+                        <i class="fa-solid fa-circle-info w-5 text-center"></i> Petunjuk
+                    </button>
+                </nav>
+
+                <!-- Quick Progress Widget -->
+                <div class="mt-6 pt-6 border-t border-slate-100">
+                    <div class="flex justify-between text-xs font-semibold text-slate-500 mb-1">
+                        <span>Progress Belajar</span>
+                        <span id="sidebar-progress-text">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div id="sidebar-progress-bar" class="bg-indigo-600 h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Area Konten Utama -->
+        <main class="flex-grow w-full max-w-5xl">
+
+            <!-- VIEW 1: BERANDA -->
+            <section id="view-beranda" class="view-section animate-fade-in space-y-8">
+                <!-- Hero Banner -->
+                <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-900 via-indigo-800 to-blue-900 text-white p-8 sm:p-12 shadow-xl">
+                    <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl">
+                        <i class="fa-solid fa-earth-asia"></i>
+                    </div>
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 mb-4">
+                            <i class="fa-solid fa-graduation-cap"></i> Modul Belajar Interaktif IPS SMP Kelas 8
+                        </span>
+                        <h2 class="font-heading text-3xl sm:text-4xl font-extrabold tracking-tight leading-tight mb-4">
+                            Proses Geografis & Keragaman Sosial Budaya
+                        </h2>
+                        <p class="text-indigo-100 text-base sm:text-lg mb-8 leading-relaxed">
+                            Jelajahi Indonesia, pahami kondisi geografisnya, dan temukan kekayaan keragaman sosial budayanya melalui media pembelajaran modern yang interaktif dan menyenangkan!
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="switchView('view-materi')" class="bg-amber-400 hover:bg-amber-500 text-slate-900 font-heading font-bold px-6 py-3 rounded-xl shadow-lg transition flex items-center gap-2">
+                                <i class="fa-solid fa-play"></i> Mulai Belajar
+                            </button>
+                            <button onclick="switchView('view-petunjuk')" class="bg-white/10 hover:bg-white/20 text-white font-medium px-5 py-3 rounded-xl backdrop-blur-md transition border border-white/20 flex items-center gap-2">
+                                <i class="fa-solid fa-circle-info"></i> Petunjuk
+                            </button>
+                            <button onclick="switchView('view-evaluasi')" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-5 py-3 rounded-xl shadow transition flex items-center gap-2">
+                                <i class="fa-solid fa-clipboard-check"></i> Evaluasi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input Nama Peserta Didik & Progress Card -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 md:col-span-2 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-heading font-bold text-lg text-slate-800 mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-id-badge text-indigo-600"></i> Identitas Peserta Didik
+                            </h3>
+                            <p class="text-sm text-slate-600 mb-4">Masukkan nama lengkap dan kelasmu agar sistem dapat merekam kemajuan belajarmu.</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap</label>
+                                    <input type="text" id="student-name-input" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 mb-1">Kelas</label>
+                                    <input type="text" id="student-class-input" value="VIII" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="saveStudentIdentity()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition self-start flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Identitas
+                        </button>
+                    </div>
+
+                    <!-- Gamification Summary Card -->
+                    <div class="glass-card rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between bg-gradient-to-br from-indigo-50 to-blue-50">
+                        <div>
+                            <h3 class="font-heading font-bold text-base text-slate-800 mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-award text-amber-500"></i> Pencapaian Kamu
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-slate-600">Total Poin:</span>
+                                    <span id="home-total-points" class="font-bold text-indigo-600">0 Poin</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-slate-600">Badge Aktif:</span>
+                                    <span id="home-active-badge" class="font-bold text-amber-600 truncate max-w-[120px]">Penjelajah</span>
+                                </div>
+                                <div class="flex justify-between items-center text-sm">
+                                    <span class="text-slate-600">Status KKM:</span>
+                                    <span id="home-kkm-status" class="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-800">Belum Tuntas</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="switchView('view-hasil')" class="mt-4 text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                            Lihat Detail Nilai & Dashboard <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tujuan Pembelajaran Card -->
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <h3 class="font-heading font-bold text-xl text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-indigo-600"></i> Tujuan Pembelajaran
+                    </h3>
+                    <p class="text-sm text-slate-600 mb-6">Setelah menggunakan media pembelajaran ini, peserta didik diharapkan mampu:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100 flex items-start gap-3">
+                            <div class="bg-indigo-600 text-white rounded-lg w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm mt-0.5">1</div>
+                            <p class="text-sm text-slate-700">Menjelaskan keragaman sosial budaya yang ada di masyarakat Indonesia.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-blue-50/70 border border-blue-100 flex items-start gap-3">
+                            <div class="bg-blue-600 text-white rounded-lg w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm mt-0.5">2</div>
+                            <p class="text-sm text-slate-700">Menganalisis pengaruh faktor geografis yang memengaruhi keragaman sosial budaya.</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100 flex items-start gap-3">
+                            <div class="bg-amber-600 text-white rounded-lg w-7 h-7 flex-shrink-0 flex items-center justify-center font-bold text-sm mt-0.5">3</div>
+                            <p class="text-sm text-slate-700">Mengidentifikasi berbagai jenis keragaman sosial budaya dan karakteristik wilayahnya.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 2: MATERI PEMBELAJARAN -->
+            <section id="view-materi" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Modul Pembelajaran</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Materi BAB 1: Proses Geografis & Keragaman</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="switchMateriTab('subA')" id="btn-subA" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-indigo-600 text-white">A. Proses Geografis</button>
+                            <button onclick="switchMateriTab('subB')" id="btn-subB" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200">B. Hubungan Geografis & Masyarakat</button>
+                        </div>
+                    </div>
+
+                    <!-- Subbab A Content -->
+                    <div id="content-subA" class="space-y-6">
+                        <div class="prose max-w-none text-slate-700 space-y-4 text-sm sm:text-base leading-relaxed">
+                            <h3 class="font-heading text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-mountain-sun text-indigo-600"></i> 1. Proses dan Kondisi Geografis Indonesia
+                            </h3>
+                            <p>
+                                Indonesia terletak di antara dua benua (Asia dan Australia) serta dua samudra (Samudra Hindia dan Samudra Pasifik). Letak geografis ini membuat Indonesia berada di jalur perdagangan strategis internasional.
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                                    <h4 class="font-heading font-bold text-slate-800 mb-2 flex items-center gap-2 text-base">
+                                        <i class="fa-solid fa-compass text-indigo-600"></i> Letak Astronomis
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Indonesia terletak antara 6°LU - 11°LS dan 95°BT - 141°BT. Akibat letak astronomis ini, Indonesia memiliki iklim tropis dengan dua musim (penghujan dan kemarau) serta penyinaran matahari sepanjang tahun.
+                                    </p>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+                                    <h4 class="font-heading font-bold text-slate-800 mb-2 flex items-center gap-2 text-base">
+                                        <i class="fa-solid fa-island-tropical text-indigo-600"></i> Bentang Alam & Wilayah Kepulauan
+                                    </h4>
+                                    <p class="text-sm text-slate-600">
+                                        Sebagai negara kepulauan terbesar di dunia (nusantara), Indonesia memiliki beragam bentang alam mulai dari pegunungan tinggi, dataran tinggi, dataran rendah yang subur, pantai, hingga laut luas dan sungai-sungai besar.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Button Tray for Sub A -->
+                            <div class="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
+                                <button onclick="openMateriModal('Letak Geografis', 'Letak geografis adalah posisi suatu wilayah berdasarkan kenyataannya di permukaan bumi. Indonesia diapit oleh Benua Asia dan Benua Australia, serta Samudra Hindia dan Samudra Pasifik. Posisi silang ini menjadikan Indonesia jalur transit perdagangan dunia sejak ratusan tahun lalu.')" class="bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                                    <i class="fa-solid fa-book-bookmark"></i> Pelajari Lebih Lanjut
+                                </button>
+                                <button onclick="openMateriModal('Contoh Bentang Alam', 'Bentang alam di Indonesia sangat bervariasi: Pegunungan Bukit Barisan di Sumatra, Dataran Tinggi Dieng di Jawa Tengah, Dataran Rendah Pantai utara Jawa, serta Sungai Kapuas di Kalimantan yang menjadi jalur transportasi utama.')" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                                    <i class="fa-solid fa-lightbulb"></i> Contoh Wilayah
+                                </button>
+                                <button onclick="openMateriModal('Fakta Menarik Geografi', 'Tahukah kamu? Indonesia dilalui oleh Cincin Api Pasifik (Pacific Ring of Fire), menjadikannya negara dengan ratusan gunung berapi aktif yang menghasilkan tanah vulkanik sangat subur untuk pertanian.')" class="bg-amber-50 hover:bg-amber-100 text-amber-700 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition flex items-center gap-2">
+                                    <i class="fa-solid fa-star"></i> Fakta Menarik
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subbab B Content -->
+                    <div id="content-subB" class="space-y-6 hidden">
+                        <div class="prose max-w-none text-slate-700 space-y-4 text-sm sm:text-base leading-relaxed">
+                            <h3 class="font-heading text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-network-wired text-indigo-600"></i> 2. Hubungan Geografis dengan Kehidupan Masyarakat
+                            </h3>
+                            <p>
+                                Kondisi geografis suatu wilayah sangat menentukan pola kehidupan sosial budaya masyarakatnya, mulai dari mata pencaharian, bentuk rumah, pakaian, hingga tradisi dan kesenian.
+                            </p>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
+                                <div class="p-5 rounded-2xl bg-blue-50/50 border border-blue-100">
+                                    <h4 class="font-heading font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
+                                        <i class="fa-solid fa-water text-blue-600"></i> Daerah Pesisir / Pantai
+                                    </h4>
+                                    <p class="text-xs text-slate-600">
+                                        Sebagian besar penduduk bekerja sebagai nelayan, petani garam, atau pedagang. Rumah panggung sering digunakan untuk menghindari pasang air laut.
+                                    </p>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100">
+                                    <h4 class="font-heading font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
+                                        <i class="fa-solid fa-mountain text-emerald-600"></i> Daerah Pegunungan
+                                    </h4>
+                                    <p class="text-xs text-slate-600">
+                                        Penduduk umumnya bekerja sebagai petani perkebunan, sayur, atau peternak. Pakaian cenderung tebal dan hangat untuk menghadapi suhu udara dingin.
+                                    </p>
+                                </div>
+                                <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-100">
+                                    <h4 class="font-heading font-bold text-slate-800 mb-2 flex items-center gap-2 text-sm">
+                                        <i class="fa-solid fa-city text-amber-600"></i> Daerah Perkotaan / Dataran Rendah
+                                    </h4>
+                                    <p class="text-xs text-slate-600">
+                                        Pusat aktivitas perdagangan, industri, jasa, dan perkantoran. Pola permukiman padat dengan beragam suku bangsa yang berinteraksi.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 3: EKSPLORASI GEOGRAFIS (PETA / KARTU WILAYAH) -->
+            <section id="view-eksplorasi" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Eksplorasi Nusantara</span>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Peta & Wilayah Budaya Indonesia</h2>
+                        <p class="text-sm text-slate-600 mt-1">Pilih wilayah atau pulau di bawah ini untuk melihat kondisi geografis dan keragaman budayanya.</p>
+                    </div>
+
+                    <!-- Region Selector Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6" id="region-buttons-grid">
+                        <!-- Dynamically populated or static buttons -->
+                        <button onclick="selectRegion('sumatra')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-indigo-600 text-white" data-region="sumatra">
+                            <span class="font-heading font-bold text-sm">Sumatra</span>
+                            <span class="text-xs opacity-80">Barat Indonesia</span>
+                        </button>
+                        <button onclick="selectRegion('jawa')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="jawa">
+                            <span class="font-heading font-bold text-sm">Jawa</span>
+                            <span class="text-xs text-slate-400">Pusat & Kepadatan</span>
+                        </button>
+                        <button onclick="selectRegion('kalimantan')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="kalimantan">
+                            <span class="font-heading font-bold text-sm">Kalimantan</span>
+                            <span class="text-xs text-slate-400">Sungai & Hutan</span>
+                        </button>
+                        <button onclick="selectRegion('sulawesi')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="sulawesi">
+                            <span class="font-heading font-bold text-sm">Sulawesi</span>
+                            <span class="text-xs text-slate-400">Bentuk Unik</span>
+                        </button>
+                        <button onclick="selectRegion('bali')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="bali">
+                            <span class="font-heading font-bold text-sm">Bali & Nusra</span>
+                            <span class="text-xs text-slate-400">Kepulauan Sunda</span>
+                        </button>
+                        <button onclick="selectRegion('maluku')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="maluku">
+                            <span class="font-heading font-bold text-sm">Maluku</span>
+                            <span class="text-xs text-slate-400">Pulau Rempah</span>
+                        </button>
+                        <button onclick="selectRegion('papua')" class="region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700" data-region="papua">
+                            <span class="font-heading font-bold text-sm">Papua</span>
+                            <span class="text-xs text-slate-400">Timur Indonesia</span>
+                        </button>
+                    </div>
+
+                    <!-- Region Detail Card Display -->
+                    <div id="region-detail-display" class="p-6 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 4: KERAGAMAN SOSIAL BUDAYA -->
+            <section id="view-keragaman" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Kekayaan Nusantara</span>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Keragaman Sosial Budaya Indonesia</h2>
+                        <p class="text-sm text-slate-600 mt-1">Klik kartu di bawah ini untuk melihat detail penjelasan, contoh, dan wilayah asal keragaman.</p>
+                    </div>
+
+                    <!-- Grid Kartu Keragaman -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="diversity-cards-grid">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 5: SIMULASI GEOGRAFIS -->
+            <section id="view-simulasi" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Simulasi Interaktif</span>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Faktor Geografis & Kehidupan Masyarakat</h2>
+                        <p class="text-sm text-slate-600 mt-1">Pilih salah satu kondisi geografis untuk melihat bagaimana kondisi tersebut memengaruhi kehidupan masyarakat.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                        <button onclick="runSimulation('pantai')" class="sim-btn p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-indigo-600 text-white shadow-sm" data-sim="pantai">
+                            <i class="fa-solid fa-water block text-2xl mb-2"></i> Pantai / Pesisir
+                        </button>
+                        <button onclick="runSimulation('pegunungan')" class="sim-btn p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-white text-slate-700 shadow-sm" data-sim="pegunungan">
+                            <i class="fa-solid fa-mountain block text-2xl mb-2 text-emerald-600"></i> Pegunungan
+                        </button>
+                        <button onclick="runSimulation('sungai')" class="sim-btn p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-white text-slate-700 shadow-sm" data-sim="sungai">
+                            <i class="fa-solid fa-water-ladder block text-2xl mb-2 text-blue-600"></i> Aliran Sungai
+                        </button>
+                        <button onclick="runSimulation('perkotaan')" class="sim-btn p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-white text-slate-700 shadow-sm" data-sim="perkotaan">
+                            <i class="fa-solid fa-city block text-2xl mb-2 text-amber-600"></i> Perkotaan
+                        </button>
+                    </div>
+
+                    <!-- Simulation Result Box -->
+                    <div id="simulation-result" class="p-6 rounded-2xl bg-indigo-50/70 border border-indigo-100 space-y-4 animate-fade-in">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 6: AKTIVITAS INTERAKTIF -->
+            <section id="view-aktivitas" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Aktivitas Pembelajaran</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Tantangan & Analisis Interaktif</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="switchActivityTab(1)" id="act-tab-1" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white">1. Cocokkan</button>
+                            <button onclick="switchActivityTab(2)" id="act-tab-2" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200">2. Kelompokkan</button>
+                            <button onclick="switchActivityTab(3)" id="act-tab-3" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200">3. Analisis Kasus</button>
+                        </div>
+                    </div>
+
+                    <!-- Aktivitas 1: Cocokkan -->
+                    <div id="activity-1" class="space-y-6">
+                        <p class="text-sm text-slate-600">Cocokkan kondisi geografis dengan mata pencaharian yang paling sesuai!</p>
+                        <div class="space-y-4" id="matching-activity-container">
+                            <!-- Populated via JS -->
+                        </div>
+                        <button onclick="checkMatchingActivity()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition shadow">
+                            Periksa Jawaban Aktivitas 1
+                        </button>
+                        <div id="matching-feedback" class="text-sm font-bold"></div>
+                    </div>
+
+                    <!-- Aktivitas 2: Kelompokkan (Social vs Cultural) -->
+                    <div id="activity-2" class="space-y-6 hidden">
+                        <p class="text-sm text-slate-600">Tentukan apakah contoh berikut termasuk ke dalam kategori <strong>Keragaman Sosial</strong> atau <strong>Keragaman Budaya</strong>!</p>
+                        <div class="space-y-4" id="categorize-activity-container">
+                            <!-- Populated via JS -->
+                        </div>
+                        <button onclick="checkCategorizeActivity()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition shadow">
+                            Periksa Jawaban Aktivitas 2
+                        </button>
+                        <div id="categorize-feedback" class="text-sm font-bold"></div>
+                    </div>
+
+                    <!-- Aktivitas 3: Analisis Studi Kasus -->
+                    <div id="activity-3" class="space-y-6 hidden">
+                        <div class="p-5 rounded-2xl bg-amber-50 border border-amber-200 text-slate-800 text-sm space-y-2">
+                            <h4 class="font-heading font-bold"><i class="fa-solid fa-circle-question text-amber-600"></i> Studi Kasus: Masyarakat Pesisir</h4>
+                            <p>"Suatu masyarakat tinggal di wilayah pesisir. Sebagian besar penduduk bekerja sebagai nelayan. Mereka memiliki makanan khas berbahan hasil laut dan memiliki tradisi petik laut sebagai wujud syukur."</p>
+                            <p class="font-semibold pt-2">Pertanyaan: Bagaimana kondisi geografis memengaruhi kehidupan sosial budaya masyarakat tersebut?</p>
+                        </div>
+                        <div>
+                            <textarea id="case-study-answer" rows="4" placeholder="Tuliskan analisis dan pendapatmu di sini..." class="w-full p-4 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"></textarea>
+                        </div>
+                        <button onclick="submitCaseStudy()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition shadow">
+                            Kirim Analisis & Lihat Referensi
+                        </button>
+                        <div id="case-study-result" class="hidden p-5 rounded-2xl bg-emerald-50 border border-emerald-200 text-sm text-slate-700 space-y-2">
+                            <h5 class="font-bold text-emerald-800"><i class="fa-solid fa-check-circle"></i> Referensi Jawaban Guru:</h5>
+                            <p>Kondisi geografis dekat laut (pesisir) langsung menentukan jenis mata pencaharian utama sebagai nelayan. Ketersediaan sumber daya laut memengaruhi jenis makanan khas (olahan ikan) dan memunculkan tradisi/upacara adat laut sebagai bentuk adaptasi dan rasa syukur terhadap lingkungan alam sekitar.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 7: LATIHAN SOAL -->
+            <section id="view-latihan" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Uji Pemahaman</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Latihan Soal Komprehensif</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="switchPracticeTab('pg')" id="prac-tab-pg" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white">Pilihan Ganda (10)</button>
+                            <button onclick="switchPracticeTab('bs')" id="prac-tab-bs" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200">Benar/Salah (5)</button>
+                            <button onclick="switchPracticeTab('isian')" id="prac-tab-isian" class="px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200">Isian Singkat (5)</button>
+                        </div>
+                    </div>
+
+                    <!-- Latihan Pilihan Ganda -->
+                    <div id="practice-pg-container" class="space-y-6">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <!-- Latihan Benar Salah -->
+                    <div id="practice-bs-container" class="space-y-6 hidden">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <!-- Latihan Isian Singkat -->
+                    <div id="practice-isian-container" class="space-y-6 hidden">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
+                        <button onclick="submitPractice()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl text-sm transition shadow flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Periksa Semua Latihan
+                        </button>
+                        <div id="practice-score-display" class="font-heading font-bold text-lg text-slate-800"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 8: KUIS INTERAKTIF -->
+            <section id="view-kuis" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div id="quiz-start-screen" class="text-center py-8 space-y-4">
+                        <div class="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl mx-auto flex items-center justify-center text-3xl">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Kuis Interaktif BAB 1</h2>
+                        <p class="text-sm text-slate-600 max-w-md mx-auto">
+                            Uji kemampuanmu dengan 15 soal pilihan ganda. Dapatkan skor, poin, dan lihat kategori hasil belajarmu secara otomatis!
+                        </p>
+                        <button onclick="startQuiz()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold px-8 py-3 rounded-xl shadow-lg transition">
+                            Mulai Kuis Sekarang
+                        </button>
+                    </div>
+
+                    <!-- Quiz Question Screen -->
+                    <div id="quiz-question-screen" class="hidden space-y-6">
+                        <div class="flex justify-between items-center text-xs font-semibold text-slate-500 pb-4 border-b border-slate-100">
+                            <span id="quiz-progress-label">Soal 1 dari 15</span>
+                            <span id="quiz-timer" class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full border border-indigo-100"><i class="fa-regular fa-clock"></i> <span id="time-left">60</span>s</span>
+                        </div>
+                        <div id="quiz-question-text" class="font-heading font-bold text-lg text-slate-800"></div>
+                        <div class="grid grid-cols-1 gap-3" id="quiz-options-container">
+                            <!-- Populated via JS -->
+                        </div>
+                        <div class="flex justify-between pt-4">
+                            <div id="quiz-feedback" class="text-sm font-bold"></div>
+                            <button onclick="nextQuizQuestion()" id="quiz-next-btn" class="hidden bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow">
+                                Soal Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Result Screen -->
+                    <div id="quiz-result-screen" class="hidden text-center py-8 space-y-6">
+                        <div class="w-20 h-20 bg-amber-100 text-amber-600 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Kuis Selesai</span>
+                            <h2 class="font-heading text-3xl font-extrabold text-slate-800 mt-1" id="quiz-final-score">Skor: 0</h2>
+                        </div>
+                        <div id="quiz-category-badge" class="inline-block px-4 py-1.5 rounded-full text-sm font-bold bg-indigo-100 text-indigo-800">
+                            Kategori: Baik
+                        </div>
+                        <p class="text-sm text-slate-600 max-w-md mx-auto" id="quiz-result-message">
+                            Terima kasih telah menyelesaikan kuis! Skor dan poinmu telah tersimpan di sistem.
+                        </p>
+                        <div class="flex justify-center gap-3">
+                            <button onclick="resetQuiz()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-6 rounded-xl text-sm transition">
+                                Ulangi Kuis
+                            </button>
+                            <button onclick="switchView('view-hasil')" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow">
+                                Lihat Hasil Belajar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 9: GAME EDUKATIF -->
+            <section id="view-game" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Mini Game Edukatif</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">🎮 Jelajah Keragaman Indonesia</h2>
+                        </div>
+                        <div class="flex items-center gap-4 text-xs font-bold">
+                            <span class="bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-xl border border-indigo-100">Skor: <span id="game-score">0</span></span>
+                            <span class="bg-rose-50 text-rose-700 px-3 py-1.5 rounded-xl border border-rose-100">Nyawa: <span id="game-lives">❤️❤️❤️</span></span>
+                        </div>
+                    </div>
+
+                    <div id="game-start-area" class="text-center py-6 space-y-4">
+                        <p class="text-sm text-slate-600 max-w-md mx-auto">
+                            Uji kecepatan dan ketepatanmu dalam menjawab tantangan seputar kondisi geografis dan budaya Indonesia!
+                        </p>
+                        <button onclick="startMiniGame()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold px-8 py-3 rounded-xl shadow transition">
+                            Mulai Game
+                        </button>
+                    </div>
+
+                    <div id="game-play-area" class="hidden space-y-6">
+                        <div id="game-question-text" class="font-heading font-bold text-lg text-slate-800"></div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="game-options-container">
+                            <!-- Populated via JS -->
+                        </div>
+                        <div id="game-feedback" class="text-sm font-bold"></div>
+                    </div>
+
+                    <div id="game-over-area" class="hidden text-center py-8 space-y-4">
+                        <h3 class="font-heading text-2xl font-bold text-slate-800" id="game-over-title">Game Selesai!</h3>
+                        <p class="text-sm text-slate-600" id="game-over-desc">Kamu berhasil mengumpulkan skor gemilang.</p>
+                        <button onclick="startMiniGame()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow">
+                            Main Lagi
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 10: REFLEKSI -->
+            <section id="view-refleksi" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Refleksi Pembelajaran</span>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Renungkan & Tuliskan Pemahamanmu</h2>
+                        <p class="text-sm text-slate-600 mt-1">Jawablah pertanyaan refleksi berikut berdasarkan pengalaman belajarmu hari ini.</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">1. Apa hal baru yang kamu pelajari dari materi BAB 1 ini?</label>
+                            <textarea id="refleksi-1" rows="3" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Tuliskan jawabanmu..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">2. Mengapa kondisi geografis dapat menyebabkan keragaman sosial budaya?</label>
+                            <textarea id="refleksi-2" rows="3" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Tuliskan jawabanmu..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">3. Keragaman budaya apa yang terdapat di daerah tempat tinggalmu?</label>
+                            <textarea id="refleksi-3" rows="3" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Tuliskan jawabanmu..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">4. Bagaimana sikap yang sebaiknya kita tunjukkan terhadap keragaman budaya?</label>
+                            <textarea id="refleksi-4" rows="3" class="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm" placeholder="Tuliskan jawabanmu..."></textarea>
+                        </div>
+                    </div>
+
+                    <button onclick="saveReflection()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-6 rounded-xl text-sm transition shadow flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan Refleksi
+                    </button>
+                </div>
+            </section>
+
+            <!-- VIEW 11: EVALUASI AKHIR -->
+            <section id="view-evaluasi" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200">
+                    <div class="mb-6 pb-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Ujian Akhir Bab</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Evaluasi Akhir (20 Soal)</h2>
+                        </div>
+                        <button onclick="startEvaluation()" id="eval-start-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-heading font-bold px-6 py-2.5 rounded-xl text-sm shadow transition">
+                            Mulai Evaluasi
+                        </button>
+                    </div>
+
+                    <!-- Evaluation Container -->
+                    <div id="evaluation-container" class="space-y-6 hidden">
+                        <!-- Populated via JS -->
+                        <button onclick="submitEvaluation()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl text-sm transition shadow flex items-center gap-2 mx-auto mt-8">
+                            <i class="fa-solid fa-check-double"></i> Selesai & Kirim Evaluasi
+                        </button>
+                    </div>
+
+                    <!-- Evaluation Result Dashboard -->
+                    <div id="evaluation-result-box" class="hidden space-y-6 text-center py-6">
+                        <div class="w-20 h-20 bg-indigo-100 text-indigo-600 rounded-3xl mx-auto flex items-center justify-center text-3xl shadow-inner">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                        </div>
+                        <h3 class="font-heading text-3xl font-extrabold text-slate-800" id="eval-score-text">Nilai: 0</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-xl mx-auto text-left">
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Jawaban Benar</span>
+                                <strong class="text-lg text-emerald-600" id="eval-correct-count">0</strong>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Jawaban Salah</span>
+                                <strong class="text-lg text-rose-600" id="eval-wrong-count">0</strong>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Persentase</span>
+                                <strong class="text-lg text-indigo-600" id="eval-percent-text">0%</strong>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <span class="text-xs text-slate-500 block">Status KKM</span>
+                                <strong class="text-lg" id="eval-status-text">Tuntas</strong>
+                            </div>
+                        </div>
+                        <p class="text-sm text-slate-600 max-w-md mx-auto" id="eval-message-text">Pesan motivasi...</p>
+                        <button onclick="startEvaluation()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 px-6 rounded-xl text-sm transition">
+                            Ulangi Evaluasi
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 12: HASIL BELAJAR -->
+            <section id="view-hasil" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div class="flex justify-between items-center pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Dashboard Siswa</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Hasil & Progress Belajar</h2>
+                        </div>
+                        <button onclick="loadStudentDashboard()" class="p-2 bg-slate-100 hover:bg-slate-200 rounded-xl text-sm transition" title="Muat Ulang">
+                            <i class="fa-solid fa-rotate"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                            <span class="text-xs text-slate-500 font-semibold">Nama Peserta Didik</span>
+                            <h4 class="font-heading font-bold text-lg text-slate-800" id="dash-name">-</h4>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                            <span class="text-xs text-slate-500 font-semibold">Kelas</span>
+                            <h4 class="font-heading font-bold text-lg text-slate-800" id="dash-class">-</h4>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                        <div class="p-5 rounded-2xl bg-indigo-50/70 border border-indigo-100">
+                            <span class="text-xs font-semibold text-indigo-600 block mb-1">Nilai Latihan</span>
+                            <strong class="text-2xl font-extrabold text-indigo-900" id="dash-score-latihan">-</strong>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-blue-50/70 border border-blue-100">
+                            <span class="text-xs font-semibold text-blue-600 block mb-1">Nilai Kuis</span>
+                            <strong class="text-2xl font-extrabold text-blue-900" id="dash-score-kuis">-</strong>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-amber-50/70 border border-amber-100">
+                            <span class="text-xs font-semibold text-amber-600 block mb-1">Nilai Evaluasi Akhir</span>
+                            <strong class="text-2xl font-extrabold text-amber-900" id="dash-score-evaluasi">-</strong>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-100">
+                            <span class="text-xs font-semibold text-emerald-600 block mb-1">Rata-Rata Nilai</span>
+                            <strong class="text-2xl font-extrabold text-emerald-900" id="dash-score-avg">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs text-slate-500 font-semibold block">Status Ketuntasan (KKM: <span id="dash-kkm-val">75</span>)</span>
+                            <strong id="dash-kkm-status" class="text-base font-bold text-amber-600">Belum Tuntas</strong>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs text-slate-500 font-semibold block">Total Poin & Badge</span>
+                            <strong id="dash-points-badge" class="text-sm font-bold text-indigo-600">0 Poin (Penjelajah)</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 13: MODE GURU -->
+            <section id="view-guru" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Panel Guru & Pengajar</span>
+                            <h2 class="font-heading text-2xl font-bold text-slate-800">Mode Guru & Statistik Hasil</h2>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="printTeacherReport()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-print"></i> Cetak Laporan
+                            </button>
+                            <button onclick="resetAllStudentData()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-semibold px-4 py-2 rounded-xl text-xs transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash-can"></i> Reset Data
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- KKM Config -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-xl bg-amber-50/60 border border-amber-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Atur Kriteria Ketuntasan Minimal (KKM)</label>
+                            <div class="flex gap-2">
+                                <input type="number" id="teacher-kkm-input" value="75" class="w-24 px-3 py-1.5 rounded-lg border border-slate-200 text-sm">
+                                <button onclick="updateTeacherKKM()" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-1.5 rounded-lg transition">Simpan KKM</button>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-700 block mb-1">Identitas Sekolah & Guru</span>
+                            <p class="text-xs text-slate-600"><span id="teacher-school-label">SMP Negeri 1 Nusantara</span> | <span id="teacher-name-label">Tim Guru IPS Profesional</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Student Statistics Table -->
+                    <div class="space-y-3">
+                        <h4 class="font-heading font-bold text-base text-slate-800">Daftar Rekapitulasi Nilai Siswa</h4>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-600">
+                                <thead class="bg-slate-100 text-slate-700 uppercase text-xs font-bold">
+                                    <tr>
+                                        <th class="p-3 rounded-l-xl">Nama Siswa</th>
+                                        <th class="p-3">Kelas</th>
+                                        <th class="p-3">Latihan</th>
+                                        <th class="p-3">Kuis</th>
+                                        <th class="p-3">Evaluasi</th>
+                                        <th class="p-3">Rata-Rata</th>
+                                        <th class="p-3 rounded-r-xl">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teacher-table-body">
+                                    <!-- Populated via JS -->
+                                    <tr>
+                                        <td colspan="7" class="p-4 text-center text-slate-400">Belum ada data siswa tersimpan.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW 14: PETUNJUK & AKSESIBILITAS -->
+            <section id="view-petunjuk" class="view-section hidden animate-fade-in space-y-8">
+                <div class="glass-card rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Panduan Pengguna</span>
+                        <h2 class="font-heading text-2xl font-bold text-slate-800">Petunjuk & Fitur Aksesibilitas</h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-700">
+                        <div class="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 space-y-3">
+                            <h3 class="font-heading font-bold text-base text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-compass text-indigo-600"></i> Cara Penggunaan Media
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                                <li>Masukkan nama dan kelas di halaman Beranda.</li>
+                                <li>Gunakan menu navigasi di samping (atau atas pada smartphone) untuk berpindah modul.</li>
+                                <li>Pelajari Materi, coba Eksplorasi Peta, dan mainkan Simulasi Geografis.</li>
+                                <li>Kerjakan Aktivitas, Latihan, Kuis, dan Evaluasi Akhir untuk menguji pemahaman.</li>
+                                <li>Semua nilai dan progress akan otomatis tersimpan di perangkatmu (LocalStorage).</li>
+                            </ul>
+                        </div>
+                        <div class="p-5 rounded-2xl bg-blue-50/50 border border-blue-100 space-y-3">
+                            <h3 class="font-heading font-bold text-base text-slate-800 flex items-center gap-2">
+                                <i class="fa-solid fa-universal-access text-blue-600"></i> Fitur Aksesibilitas
+                            </h3>
+                            <ul class="list-disc pl-5 space-y-1 text-slate-600">
+                                <li><strong>Pengatur Ukuran Teks:</strong> Gunakan tombol A-, A, A+ di bagian atas header untuk menyesuaikan kenyamanan membaca.</li>
+                                <li><strong>Efek Suara Audio:</strong> Tombol suara untuk mengaktifkan/menonaktifkan efek suara interaktif.</li>
+                                <li><strong>Responsif:</strong> Dirancang agar nyaman dioperasikan di laptop, tablet, maupun smartphone.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p class="font-heading font-bold text-sm text-white">Media Pembelajaran IPS Kelas 8 – BAB 1 Proses Geografis dan Keragaman Sosial Budaya</p>
+            <p class="text-xs">Dibuat untuk mendukung pembelajaran IPS yang interaktif, menyenangkan, dan bermakna.</p>
+            <p class="text-xs text-slate-500 pt-2">&copy; 2026 SMP Negeri 1 Nusantara | Kurikulum Merdeka</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ==========================================
+           DATA & STATE MANAGEMENT
+           ========================================== */
+        let state = {
+            studentName: localStorage.getItem('ips_student_name') || "",
+            studentClass: localStorage.getItem('ips_student_class') || "VIII",
+            points: parseInt(localStorage.getItem('ips_points')) || 0,
+            badge: localStorage.getItem('ips_badge') || "Penjelajah",
+            kkm: parseInt(localStorage.getItem('ips_kkm')) || 75,
+            audioEnabled: true,
+            fontSize: 'md',
+            scores: {
+                latihan: localStorage.getItem('ips_score_latihan') !== null ? parseInt(localStorage.getItem('ips_score_latihan')) : null,
+                kuis: localStorage.getItem('ips_score_kuis') !== null ? parseInt(localStorage.getItem('ips_score_kuis')) : null,
+                evaluasi: localStorage.getItem('ips_score_evaluasi') !== null ? parseInt(localStorage.getItem('ips_score_evaluasi')) : null
+            },
+            completedViews: JSON.parse(localStorage.getItem('ips_completed_views')) || []
+        };
+
+        // Regional Data for Exploration
+        const regionData = {
+            sumatra: {
+                title: "Pulau Sumatra",
+                geo: "Bentang alam bervariasi dengan Bukit Barisan memanjang di bagian barat, sungai-sungai besar seperti Musi dan Asahan, serta dataran rendah luas di timur.",
+                suku: "Batak, Minangkabau, Aceh, Melayu, Palembang.",
+                bahasa: "Bahasa Batak, Minang, Aceh, Melayu.",
+                rumah: "Rumah Gadang (Minang), Bolon (Batak), Limas (Palembang).",
+                pakaian: "Ulos (Batak), Bundo Kanduang (Minang).",
+                kuliner: "Rendang, Pempek, Mie Aceh, Bika Ambon.",
+                pencaharian: "Petani perkebunan (sawit, karet), nelayan, pedagang."
+            },
+            jawa: {
+                title: "Pulau Jawa",
+                geo: "Didominasi oleh rangkaian gunung berapi aktif, dataran rendah yang sangat subur akibat endapan vulkanik, serta sungai-sungai strategis seperti Bengawan Solo.",
+                suku: "Jawa, Sunda, Madura, Betawi, Tengger.",
+                bahasa: "Bahasa Jawa, Sunda, Madura, Betawi.",
+                rumah: "Joglo (Jawa), Badui, Kebaya (Betawi).",
+                pakaian: "Pangaksi, Kebaya, Beskap.",
+                kuliner: "Gudeg, Rawon, Pecel, Soto Betawi, Lumpia.",
+                pencaharian: "Petani padi, buruh industri, pegawai jasa, pedagang."
+            },
+            kalimantan: {
+                title: "Pulau Kalimantan",
+                geo: "Pulau dengan hutan tropis yang luas, sungai-sungai sangat besar (Kapuas, Barito) yang menjadi jalur transportasi utama, serta dataran rendah berawa.",
+                suku: "Dayak, Banjar, Kutai, Melayu.",
+                bahasa: "Bahasa Banjar, Dayak, Melayu.",
+                rumah: "Rumah Panjang / Betang (Dayak), Bubungan Tinggi (Banjar).",
+                pakaian: "King Baba / King Tompang.",
+                kuliner: "Soto Banjar, Amplang, Cencaru.",
+                pencaharian: "Petani ladang, penambang, nelayan sungai, pengumpul hasil hutan."
+            },
+            sulawesi: {
+                title: "Pulau Sulawesi",
+                geo: "Memiliki bentuk unik seperti huruf 'H', bergunung-gunung dengan teluk dan selat laut yang dalam, garis pantai yang sangat panjang.",
+                suku: "Bugis, Makassar, Toraja, Minahasa, Gorontalo.",
+                bahasa: "Bahasa Bugis, Makassar, Toraja, Manado.",
+                rumah: "Tongkonan (Toraja), Bola Ugi (Bugis).",
+                pakaian: "Baju Bodo (Bugis/Makassar).",
+                kuliner: "Coto Makassar, Pallubasa, Pisang Epe.",
+                pencaharian: "Nelayan, petani rumput laut, petani cengkeh/pala, pedagang."
+            },
+            bali: {
+                title: "Bali & Nusa Tenggara",
+                geo: "Kepulauan vulkanik dan kering di bagian timur, dengan pantai indah, sabana kering untuk peternakan, serta kontur berbukit.",
+                suku: "Bali, Sasak, Sumbawa, Flores, Timor.",
+                bahasa: "Bahasa Bali, Sasak, Manggarai, Dawan.",
+                rumah: "Gapura Candi Bentar, Bale, Mbaru Niang (Wae Rebo).",
+                pakaian: "Pakaian Adat Bali, Tenun Ikat Sikka/Flores.",
+                kuliner: "Ayam Betutu, Sate Lilit, Ayam Taliwang.",
+                pencaharian: "Petani sawah terasering, pelaku pariwisata, nelayan, peternak."
+            },
+            maluku: {
+                title: "Pulau Maluku",
+                geo: "Kepulauan rempah-rempah yang dikelilingi oleh laut dalam, teluk, dan pulau-pulau kecil vulkanik.",
+                suku: "Ambon, Seram, Kei, Ternate, Tidore.",
+                bahasa: "Bahasa Melayu Maluku, bahasa daerah setempat.",
+                rumah: "Baileo.",
+                pakaian: "Baju Cele.",
+                kuliner: "Papeda, Kasbi, Ikan Asar.",
+                pencaharian: "Nelayan, petani rempah-rempah (pala, cengkeh)."
+            },
+            papua: {
+                title: "Pulau Papua",
+                geo: "Wilayah timur Indonesia dengan pegunungan tertinggi bersalju abadi (Puncak Jaya), hutan hujan lebat, serta lembah sungai yang luas.",
+                suku: "Dani, Asmat, Amungme, Biak, Mee.",
+                bahasa: "Ratusan bahasa lokal rumpun Papua.",
+                rumah: "Honai (Pegunungan), Rumah Tinggi.",
+                pakaian: "Koteka, Rok Rumbai, hiasan bulu burung cenderawasih.",
+                kuliner: "Papeda, Sagu, Ikan Bakar Manokwari.",
+                pencaharian: "Meramu sagu, berburu, petani kebun tradisional, nelayan sungai."
+            }
+        };
+
+        // Diversity Cards Data
+        const diversityData = [
+            { title: "Suku Bangsa", icon: "fa-users", desc: "Indonesia memiliki lebih dari 1.340 suku bangsa (Sensus BPS). Suku Jawa dan Sunda adalah kelompok terbesar, diikuti Batak, Madura, Bugis, dan ratusan suku di Papua.", example: "Suku Jawa, Batak, Asmat, Dayak, Bali.", region: "Seluruh Indonesia", fact: "Setiap suku memiliki identitas adat dan struktur sosial tersendiri." },
+            { title: "Bahasa Daerah", icon: "fa-language", desc: "Terdapat lebih dari 700 bahasa daerah di Indonesia yang menjadi alat komunikasi antarwarga suku tertentu, disatukan oleh Bahasa Indonesia.", example: "Bahasa Sunda, Batak, Sasak, Biak.", region: "Berbagai Provinsi", fact: "Indonesia merupakan salah satu negara dengan keragaman bahasa terbanyak di dunia." },
+            { title: "Rumah Adat", icon: "fa-house-chimney", desc: "Bentuk rumah adat dipengaruhi oleh kondisi geografis (misal: rumah panggung untuk daerah rawan banjir/pasang air laut, rumah Honai hangat untuk pegunungan dingin).", example: "Joglo, Rumah Gadang, Tongkonan, Honai.", region: "Jawa, Minang, Toraja, Papua", fact: "Rumah adat dirancang tahan gempa dan ramah lingkungan." },
+            { title: "Pakaian Adat", icon: "fa-shirt", desc: "Pakaian tradisional yang dikenakan saat upacara adat, terbuat dari tenun, batik, atau bahan alam dengan corak khas filosofis.", example: "Ulos, Baju Bodo, King Baba, Kebaya.", region: "Sumatra, Sulawesi, Kalimantan, Jawa", fact: "Setiap corak kain tenun memiliki makna sejarah dan status sosial." },
+            { title: "Makanan Tradisional", icon: "fa-bowl-food", desc: "Olahan makanan khas daerah yang menggunakan hasil bumi lokal (ikan laut, sagu, rempah-rempah, beras, umbi-umbian).", example: "Rendang, Papeda, Gudeg, Coto Makassar.", region: "Padang, Papua, Yogyakarta, Makassar", fact: "Rendang dan Nasi Goreng dinobatkan sebagai makanan terlezat dunia." },
+            { title: "Kesenian & Musik", icon: "fa-music", desc: "Seni tari, alat musik tradisional (Angklung, Sasando, Kolintang), dan teater rakyat yang mencerminkan ekspresi budaya masyarakat.", example: "Tari Saman, Angklung, Sasando, Tari Pendet.", region: "Aceh, Jawa Barat, NTT, Bali", fact: "Angklung dan Tari Saman telah diakui UNESCO sebagai Warisan Budaya Takbenda." }
+        ];
+
+        // Practice Questions Data
+        const practicePG = [
+            { q: "Letak astronomis Indonesia terletak pada posisi...", opts: ["6°LU - 11°LS dan 95°BT - 141°BT", "6°LS - 11°LU dan 95°BB - 141°BB", "0° - 30°LU dan 100°BT - 120°BT", "10°LU - 20°LS dan 90°BT - 130°BT"], ans: 0 },
+            { q: "Secara geografis, Indonesia terletak di antara dua benua yaitu...", opts: ["Asia dan Afrika", "Asia dan Australia", "Amerika dan Australia", "Eropa dan Asia"], ans: 1 },
+            { q: "Dampak letak geografis Indonesia di jalur perdagangan internasional adalah...", opts: ["Sering terjadi badai salju", "Menjadi jalur transit perdagangan dan percampuran budaya dunia", "Menjadi negara paling sepi di dunia", "Tanah menjadi tandus"], ans: 1 },
+            { q: "Masyarakat di daerah pegunungan umumnya bekerja sebagai...", opts: ["Nelayan laut", "Petani perkebunan dan sayur", "Pegawai pabrik perkapalan", "Pedagang asongan di pantai"], ans: 1 },
+            { q: "Faktor utama penyebab tingginya keragaman budaya di Indonesia adalah...", opts: ["Jumlah penduduk yang sedikit", "Kondisi wilayah kepulauan dan perbedaan kondisi geografis", "Satu jenis iklim yang sama persis", "Kebijakan satu budaya nasional"], ans: 1 },
+            { q: "Rumah adat Honai dari Papua didesain berbentuk setengah bola dengan atap jerami bertujuan untuk...", opts: ["Menahan angin kencang dan menjaga kehangatan dari hawa dingin pegunungan", "Menghindari serangan hewan air", "Memudahkan mobilitas di atas pohon", "Menyimpan air hujan"], ans: 0 },
+            { q: "Contoh makanan tradisional dari wilayah Papua berbahan dasar sagu adalah...", opts: ["Gudeg", "Papeda", "Rendang", "Pempek"], ans: 1 },
+            { q: "Pulau di Indonesia yang terkenal dengan aliran sungai besar seperti Sungai Kapuas dan Barito adalah...", opts: ["Jawa", "Sumatra", "Kalimantan", "Sulawesi"], ans: 2 },
+            { q: "Sikap yang tepat dalam menghadapi keragaman suku dan budaya di Indonesia adalah...", opts: ["Mengejek budaya lain", "Acuh tak acuh", "Saling menghargai dan melestarikan bersama", "Menganggap budaya sendiri paling unggul"], ans: 2 },
+            { q: "Alat musik tradisional Sasando berasal dari daerah...", opts: ["Jawa Barat", "Nusa Tenggara Timur (Rote)", "Sumatra Utara", "Maluku"], ans: 1 }
+        ];
+
+        const practiceBS = [
+            { q: "Letak astronomis Indonesia menyebabkan Indonesia memiliki iklim tropis.", ans: true },
+            { q: "Masyarakat di daerah pesisir pantai mayoritas bekerja sebagai petani teh.", ans: false },
+            { q: "Keragaman suku bangsa di Indonesia merupakan kekayaan bangsa yang harus disyukuri.", ans: true },
+            { q: "Rumah Gadang merupakan rumah adat khas masyarakat suku Minangkabau di Sumatra.", ans: true },
+            { q: "Kondisi geografis tidak memiliki pengaruh apapun terhadap mata pencaharian penduduk.", ans: false }
+        ];
+
+        const practiceIsian = [
+            { q: "Negara Indonesia terletak di antara dua samudra, yaitu Samudra Hindia dan Samudra...", ans: "pasifik" },
+            { q: "Pakaian tradisional khas dari suku Batak Sumatra Utara disebut kain...", ans: "ulos" },
+            { q: "Rumah adat khas masyarakat Toraja di Sulawesi Selatan dinamakan...", ans: "tongkonan" },
+            { q: "Alat musik tradisional bersenar banyak dari daun lontar asal Rote NTT adalah...", ans: "sasando" },
+            { q: "Garis lintang yang membatasi wilayah utara Indonesia adalah ... derajat Lintang Utara.", ans: "6" }
+        ];
+
+        // Quiz Questions (15 items)
+        const quizQuestions = [
+            { q: "Batas wilayah Indonesia di sebelah barat berbatasan langsung dengan...", opts: ["Samudra Pasifik", "Samudra Hindia", "Benua Australia", "Laut Cina Selatan"], ans: 1 },
+            { q: "Tanah vulkanik di Indonesia yang sangat subur dihasilkan oleh aktivitas...", opts: ["Sungai besar", "Gunung berapi (vulkanisme)", "Gelombang pasang laut", "Angin musim"], ans: 1 },
+            { q: "Mata pencaharian utama penduduk di daerah dataran rendah yang subur adalah...", opts: ["Nelayan", "Petani sawah / padi", "Pencari mutiara", "Petani rumput laut"], ans: 1 },
+            { q: "Suku Sunda berasal dari wilayah provinsi...", opts: ["Jawa Barat", "Jawa Timur", "Sumatra Barat", "Bali"], ans: 0 },
+            { q: "Tari Saman yang terkenal dengan gerakan cepat dan kekompakannya berasal dari...", opts: ["Aceh", "Bali", "Papua", "Maluku"], ans: 0 },
+            { q: "Rumah adat Joglo merupakan arsitektur tradisional dari masyarakat...", opts: ["Jawa", "Kalimantan", "Sulawesi", "Papua"], ans: 0 },
+            { q: "Makanan khas Pempek berbahan dasar ikan berasal dari kota...", opts: ["Palembang", "Padang", "Makassar", "Medan"], ans: 0 },
+            { q: "Pulau di Indonesia yang bentuknya menyerupai huruf 'H' adalah...", opts: ["Sumatra", "Kalimantan", "Sulawesi", "Jawa"], ans: 2 },
+            { q: "Tradisi upacara pembakaran jenazah di Bali dikenal dengan nama...", opts: ["Ngaben", "Tabuik", "Sekaten", "Grebeg"], ans: 0 },
+            { q: "Semboyan negara Indonesia yang mencerminkan persatuan dalam keragaman adalah...", opts: ["Tut Wuri Handayani", "Bhinneka Tunggal Ika", "Garuda Pancasila", "Kartika Eka Paksi"], ans: 1 },
+            { q: "Sungai terpanjang di pulau Kalimantan yang juga menjadi alur pelayaran penting adalah...", opts: ["Sungai Musi", "Sungai Kapuas", "Sungai Bengawan Solo", "Sungai Brantas"], ans: 1 },
+            { q: "Pakaian adat wanita Sulawesi Selatan yang terkenal dengan warna cerahnya adalah...", opts: ["Baju Bodo", "Ulos", "Baju Cele", "Pangaksi"], ans: 0 },
+            { q: "Faktor geografis yang menyebabkan Indonesia memiliki keanekaragaman flora dan fauna serta budaya adalah...", opts: ["Wilayah berupa kepulauan terisolasi namun strategis", "Letak di kutub utara", "Tanah yang seluruhnya gurun pasir", "Tidak memiliki gunung"], ans: 0 },
+            { q: "Sikap toleransi antarumat beragama dan suku bangsa di Indonesia diatur dalam semangat...", opts: ["Egoisme daerah", "Persatuan dan kesatuan nasional", "Perpecahan kelompok", "Kedaerahan sempit"], ans: 1 },
+            { q: "Alat musik angklung yang terbuat dari bambu berasal dari daerah...", opts: ["Jawa Barat", "Jawa Tengah", "Jawa Timur", "DKI Jakarta"], ans: 0 }
+        ];
+
+        // Evaluation Questions (20 items)
+        const evalQuestions = [
+            { q: "Letak astronomis Indonesia adalah...", opts: ["6°LU - 11°LS dan 95°BT - 141°BT", "10°LU - 20°LS dan 90°BT - 110°BT", "0° - 50°LU dan 100°BT - 150°BT", "11°LU - 6°LS dan 90°BB - 130°BB"], ans: 0 },
+            { q: "Secara geografis, Indonesia diapit oleh dua benua yaitu...", opts: ["Asia dan Australia", "Afrika dan Eropa", "Amerika dan Asia", "Australia dan Amerika"], ans: 0 },
+            { q: "Dampak dari letak geografis Indonesia di jalur silang dunia adalah...", opts: ["Menjadi jalur strategis perdagangan internasional", "Sering terjadi badai salju", "Terisolasi dari dunia luar", "Tidak memiliki hubungan luar negeri"], ans: 0 },
+            { q: "Wilayah Indonesia yang terdiri dari ribuan pulau dikategorikan sebagai negara...", opts: ["Kontinental", "Kepulauan (Nusantara)", "Enklave", "Gurun"], ans: 1 },
+            { q: "Tanah vulkanik yang subur di Indonesia merupakan berkah dari banyaknya...", opts: ["Sungai besar", "Gunung berapi aktif", "Danau vulkanik", "Gurun pasir"], ans: 1 },
+            { q: "Masyarakat di daerah pesisir pantai umumnya bermata pencaharian sebagai...", opts: ["Petani teh", "Nelayan", "Pegawai pabrik es", "Petani kentang"], ans: 1 },
+            { q: "Rumah adat tradisional Honai dari Papua berfungsi utama untuk...", opts: ["Menahan hawa dingin pegunungan", "Menghindari banjir bandang", "Tempat berlayar", "Pusat perdagangan"], ans: 0 },
+            { q: "Suku bangsa Minangkabau terkenal dengan sistem kekerabatan matrilineal dan berasal dari...", opts: ["Sumatra Barat", "Sumatra Utara", "Aceh", "Riau"], ans: 0 },
+            { q: "Tari Pendet dan Kecak merupakan bagian dari kekayaan seni budaya dari pulau...", opts: ["Bali", "Jawa", "Lombok", "Flores"], ans: 0 },
+            { q: "Makanan tradisional Papeda berbahan dasar sagu banyak dikonsumsi oleh masyarakat di...", opts: ["Papua dan Maluku", "Jawa Tengah", "Sumatra Selatan", "Kalimantan Selatan"], ans: 0 },
+            { q: "Pulau Kalimantan memiliki ciri geografis berupa...", opts: ["Hutan tropis luas dan sungai-sungai besar", "Gurun pasir yang luas", "Gunung es abadi", "Sabana tandus"], ans: 0 },
+            { q: "Alat musik tradisional Sasando terbuat dari anyaman daun lontar dan berasal dari...", opts: ["Pulau Rote, NTT", "Madura", "Bali", "Ambon"], ans: 0 },
+            { q: "Sikap menghargai perbedaan suku, agama, dan budaya di Indonesia disebut...", opts: ["Toleransi", "Etnnosentrisme", "Chauvinisme", "Individualisme"], ans: 0 },
+            { q: "Rumah adat Tongkonan merupakan arsitektur khas suku...", opts: ["Toraja", "Batak", "Dayak", "Asmat"], ans: 0 },
+            { q: "Pakaian tradisional Baju Bodo berasal dari suku...", opts: ["Bugis-Makassar", "Jawa", "Sunda", "Sasak"], ans: 0 },
+            { q: "Sungai Musi di Sumatra Selatan memiliki peran penting dalam kehidupan masyarakat sebagai...", opts: ["Jalur transportasi dan pusat perdagangan air", "Tempat ski es", "Gurun garam", "Tambang emas"], ans: 0 },
+            { q: "Faktor utama penyebab keragaman budaya di Indonesia adalah...", opts: ["Perbedaan kondisi geografis wilayah kepulauan", "Satu jenis cuaca yang sama", "Jumlah penduduk yang sedikit", "Pemerintah menetapkan satu budaya"], ans: 0 },
+            { q: "Semboyan 'Bhinneka Tunggal Ika' memiliki arti...", opts: ["Berbeda-beda tetapi tetap satu jua", "Bersatu kita teguh bercerai kita runtuh", "Negara kuat karena persatuan", "Budaya satu untuk semua"], ans: 0 },
+            { q: "Upacara Ngaben di Bali berkaitan dengan tradisi...", opts: ["Kematian / pembakaran jenazah", "Panen padi", "Pesta laut", "Pernikahan adat"], ans: 0 },
+            { q: "Tindakan yang mencerminkan pelestarian budaya bangsa adalah...", opts: ["Mempelajari dan memainkan tarian tradisional", "Malu menggunakan produk lokal", "Menghapuskan adat istiadat", "Mengabaikan bahasa daerah"], ans: 0 }
+        ];
+
+        /* ==========================================
+           AUDIO SYNTHESIZER (Web Audio API)
+           ========================================== */
+        let audioCtx = null;
+        function playSound(type) {
+            if (!state.audioEnabled) return;
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'correct' || type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime + 0.1); // A5
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(150, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.3);
+                } else {
+                    // click
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.1);
+                }
+            } catch(e) {
+                console.log("Audio not supported or blocked");
+            }
+        }
+
+        function toggleAudio() {
+            state.audioEnabled = !state.audioEnabled;
+            const icon = document.getElementById('audio-icon');
+            if (state.audioEnabled) {
+                icon.className = "fa-solid fa-volume-high";
+                showToast("Suara efek diaktifkan", "success");
+            } else {
+                icon.className = "fa-solid fa-volume-xmark";
+                showToast("Suara efek dimatikan", "info");
+            }
+        }
+
+        /* ==========================================
+           TOAST NOTIFICATIONS (No alert())
+           ========================================== */
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            let bg = "bg-slate-800 text-white";
+            let icon = "fa-circle-info text-blue-400";
+            if (type === 'success') {
+                bg = "bg-emerald-600 text-white";
+                icon = "fa-circle-check text-emerald-200";
+            } else if (type === 'error') {
+                bg = "bg-rose-600 text-white";
+                icon = "fa-circle-exclamation text-rose-200";
+            }
+            toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-lg ${bg} text-sm font-medium flex items-center gap-3 animate-fade-in transition-all`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        /* ==========================================
+           NAVIGATION & VIEW CONTROLLER
+           ========================================== */
+        function switchView(viewId) {
+            playSound('click');
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(viewId);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Desktop Nav Active States
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === viewId) {
+                    btn.className = "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition bg-indigo-600 text-white shadow-sm";
+                } else {
+                    btn.className = "nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-indigo-50 hover:text-indigo-600 transition";
+                }
+            });
+
+            // Track completed views for progress
+            if (!state.completedViews.includes(viewId)) {
+                state.completedViews.push(viewId);
+                localStorage.setItem('ips_completed_views', JSON.stringify(state.completedViews));
+                updateProgressUI();
+            }
+
+            // Specific view initializers
+            if (viewId === 'view-eksplorasi') selectRegion('sumatra');
+            if (viewId === 'view-keragaman') renderDiversityCards();
+            if (viewId === 'view-simulasi') runSimulation('pantai');
+            if (viewId === 'view-aktivitas') {
+                renderMatchingActivity();
+                renderCategorizeActivity();
+            }
+            if (viewId === 'view-latihan') renderPracticeContent();
+            if (viewId === 'view-hasil') loadStudentDashboard();
+            if (viewId === 'view-guru') loadTeacherDashboard();
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function changeFontSize(size) {
+            playSound('click');
+            state.fontSize = size;
+            if (size === 'sm') document.body.style.fontSize = '14px';
+            else if (size === 'md') document.body.style.fontSize = '16px';
+            else if (size === 'lg') document.body.style.fontSize = '18px';
+            showToast(`Ukuran teks diubah ke ${size.toUpperCase()}`, 'success');
+        }
+
+        function updateProgressUI() {
+            const totalModules = 13;
+            const progress = Math.min(100, Math.round((state.completedViews.length / totalModules) * 100));
+            document.getElementById('sidebar-progress-bar').style.width = progress + '%';
+            document.getElementById('sidebar-progress-text').innerText = progress + '%';
+            document.getElementById('header-points').innerText = state.points + " Poin";
+            document.getElementById('mobile-points').innerText = state.points;
+            document.getElementById('home-total-points').innerText = state.points + " Poin";
+            document.getElementById('header-badge').innerText = state.badge;
+            document.getElementById('mobile-badge').innerText = state.badge;
+            document.getElementById('home-active-badge').innerText = state.badge;
+        }
+
+        /* ==========================================
+           STUDENT IDENTITY & GAMIFICATION
+           ========================================== */
+        function saveStudentIdentity() {
+            const name = document.getElementById('student-name-input').value.trim();
+            const cls = document.getElementById('student-class-input').value.trim();
+            if (!name) {
+                showToast("Mohon masukkan nama lengkapmu terlebih dahulu!", "error");
+                return;
+            }
+            state.studentName = name;
+            state.studentClass = cls;
+            localStorage.setItem('ips_student_name', name);
+            localStorage.setItem('ips_student_class', cls);
+            addPoints(10);
+            showToast(`Identitas berhasil disimpan. Selamat belajar, ${name}!`, "success");
+        }
+
+        function addPoints(pts) {
+            state.points += pts;
+            localStorage.setItem('ips_points', state.points);
+            checkBadgeUnlock();
+            updateProgressUI();
+        }
+
+        function checkBadgeUnlock() {
+            if (state.points >= 200) state.badge = "Pakar Keragaman 🏆";
+            else if (state.points >= 120) state.badge = "Pengenal Budaya 🏅";
+            else if (state.points >= 60) state.badge = "Ahli Geografi 🌟";
+            else state.badge = "Penjelajah 🧭";
+            localStorage.setItem('ips_badge', state.badge);
+        }
+
+        /* ==========================================
+           MATERI & MODAL UTILITIES
+           ========================================== */
+        function switchMateriTab(tab) {
+            playSound('click');
+            const subA = document.getElementById('content-subA');
+            const subB = document.getElementById('content-subB');
+            const btnA = document.getElementById('btn-subA');
+            const btnB = document.getElementById('btn-subB');
+
+            if (tab === 'subA') {
+                subA.classList.remove('hidden');
+                subB.classList.add('hidden');
+                btnA.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-indigo-600 text-white";
+                btnB.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
+            } else {
+                subB.classList.remove('hidden');
+                subA.classList.add('hidden');
+                btnB.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-indigo-600 text-white";
+                btnA.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
+            }
+        }
+
+        function openMateriModal(title, text) {
+            playSound('click');
+            const modal = document.createElement('div');
+            modal.className = "fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in";
+            modal.innerHTML = `
+                <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-4 border border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-heading font-bold text-xl text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-indigo-600"></i> ${title}
+                        </h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-slate-400 hover:text-slate-600 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed">${text}</p>
+                    <button onclick="this.closest('.fixed').remove()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl text-sm transition">Mengerti</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        /* ==========================================
+           EKSPLORASI GEOGRAFIS
+           ========================================== */
+        function selectRegion(key) {
+            playSound('click');
+            const data = regionData[key];
+            if (!data) return;
+
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                if (btn.getAttribute('data-region') === key) {
+                    btn.className = "region-btn p-3 rounded-xl border border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-indigo-600 text-white shadow";
+                } else {
+                    btn.className = "region-btn p-3 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-left flex flex-col gap-1 bg-white text-slate-700 shadow-sm";
+                }
+            });
+
+            const display = document.getElementById('region-detail-display');
+            display.innerHTML = `
+                <h3 class="font-heading font-bold text-xl text-indigo-900">${data.title}</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-700 pt-2">
+                    <div class="p-3 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-mountain-sun"></i> Kondisi Geografis</strong>
+                        <span>${data.geo}</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-users"></i> Suku & Bahasa</strong>
+                        <span>Suku: ${data.suku}<br>Bahasa: ${data.bahasa}</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-house"></i> Rumah & Pakaian Adat</strong>
+                        <span>Rumah: ${data.rumah}<br>Pakaian: ${data.pakaian}</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-utensils"></i> Kuliner & Pencaharian</strong>
+                        <span>Kuliner: ${data.kuliner}<br>Pencaharian: ${data.pencaharian}</span>
+                    </div>
+                </div>
+            `;
+            addPoints(2);
+        }
+
+        /* ==========================================
+           KERAGAMAN SOSIAL BUDAYA CARDS
+           ========================================== */
+        function renderDiversityCards() {
+            const grid = document.getElementById('diversity-cards-grid');
+            if (grid.children.length > 0) return; // already rendered
+            grid.innerHTML = "";
+            diversityData.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = "p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition flex flex-col justify-between space-y-3 cursor-pointer";
+                card.onclick = () => openDiversityModal(item);
+                card.innerHTML = `
+                    <div>
+                        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-lg mb-3">
+                            <i class="fa-solid ${item.icon}"></i>
+                        </div>
+                        <h4 class="font-heading font-bold text-base text-slate-800">${item.title}</h4>
+                        <p class="text-xs text-slate-600 mt-1 line-clamp-2">${item.desc}</p>
+                    </div>
+                    <span class="text-xs font-bold text-indigo-600 flex items-center gap-1">Pelajari Detail <i class="fa-solid fa-arrow-right"></i></span>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openDiversityModal(item) {
+            playSound('click');
+            const modal = document.createElement('div');
+            modal.className = "fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in";
+            modal.innerHTML = `
+                <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-4 border border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-heading font-bold text-xl text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid ${item.icon} text-indigo-600"></i> ${item.title}
+                        </h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-slate-400 hover:text-slate-600 p-2"><i class="fa-solid fa-xmark text-lg"></i></button>
+                    </div>
+                    <p class="text-sm text-slate-600 leading-relaxed">${item.desc}</p>
+                    <div class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-100 text-xs text-slate-700 space-y-1">
+                        <strong class="block font-bold text-indigo-900">Contoh & Wilayah:</strong>
+                        <p>Contoh: ${item.example}</p>
+                        <p>Wilayah: ${item.region}</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-100 text-xs text-slate-700">
+                        <strong class="block font-bold text-amber-900"><i class="fa-solid fa-star text-amber-500"></i> Fakta Menarik:</strong>
+                        <p>${item.fact}</p>
+                    </div>
+                    <button onclick="this.closest('.fixed').remove(); addPoints(5);" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl text-sm transition">Tutup & Ambil Poin</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        /* ==========================================
+           SIMULASI GEOGRAFIS
+           ========================================== */
+        const simulationData = {
+            pantai: {
+                title: "Simulasi Kondisi: Pantai / Pesisir",
+                livelihood: "Nelayan, petani garam, pembudidaya ikan, pedagang hasil laut, pelaku wisata pantai.",
+                food: "Olahan ikan segar, udang, cumi, sambal terasi khas pesisir.",
+                housing: "Rumah panggung kayu agar terhindar dari pasang air laut.",
+                transport: "Perahu motor, kapal nelayan tradisional, jalur laut.",
+                culture: "Upacara petik laut, tradisi syukur hasil tangkapan laut, seni musik pesisir."
+            },
+            pegunungan: {
+                title: "Simulasi Kondisi: Pegunungan",
+                livelihood: "Petani perkebunan (teh, kopi, sayuran), peternak, pemandu wisata alam.",
+                food: "Makanan hangat, sayuran segar dataran tinggi, umbi-umbian.",
+                housing: "Rumah dengan dinding kayu tebal dan atap rapat untuk menahan suhu dingin.",
+                transport: "Kendaraan darat roda empat/dua melintasi jalan berliku perbukitan.",
+                culture: "Tradisi panen raya, seni tari agraris, pakaian tebal khas."
+            },
+            sungai: {
+                title: "Simulasi Kondisi: Aliran Sungai",
+                livelihood: "Nelayan air tawar, petani pasang surut, pedagang pasar terapung.",
+                food: "Ikan patin, ikan baung bakar, olahan sungai.",
+                housing: "Rumah lanting (rumah apung di atas sungai) atau rumah panggung tinggi.",
+                transport: "Perahu klotok, sampan, getek menyusuri sungai.",
+                culture: "Pasar terapung, tradisi air, festival sungai."
+            },
+            perkotaan: {
+                title: "Simulasi Kondisi: Perkotaan / Dataran Rendah",
+                livelihood: "Pegawai perkantoran, buruh industri, pelaku jasa, pedagang modern.",
+                food: "Beraneka ragam kuliner nusantara dan modern.",
+                housing: "Rumah permanen modern, perumahan cluster, apartemen vertikal.",
+                transport: "Mobil pribadi, motor, transportasi umum (bus, kereta perkotaan).",
+                culture: "Multikultural, percampuran berbagai suku bangsa dan tradisi modern."
+            }
+        };
+
+        function runSimulation(key) {
+            playSound('click');
+            const data = simulationData[key];
+            if (!data) return;
+
+            document.querySelectorAll('.sim-btn').forEach(btn => {
+                if (btn.getAttribute('data-sim') === key) {
+                    btn.className = "sim-btn p-4 rounded-xl border border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-indigo-600 text-white shadow-sm";
+                } else {
+                    btn.className = "sim-btn p-4 rounded-xl border border-slate-200 hover:border-indigo-500 hover:bg-indigo-50 transition text-center font-bold text-sm bg-white text-slate-700 shadow-sm";
+                }
+            });
+
+            const result = document.getElementById('simulation-result');
+            result.innerHTML = `
+                <h3 class="font-heading font-bold text-xl text-indigo-900 mb-3">${data.title}</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm text-slate-700">
+                    <div class="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-briefcase"></i> Mata Pencaharian</strong>
+                        <span>${data.livelihood}</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-bowl-food"></i> Jenis Makanan</strong>
+                        <span>${data.food}</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-house"></i> Pola Permukiman & Rumah</strong>
+                        <span>${data.housing}</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-car"></i> Transportasi</strong>
+                        <span>${data.transport}</span>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-white border border-indigo-100 shadow-sm sm:col-span-2">
+                        <strong class="block text-xs font-bold text-indigo-600 uppercase mb-1"><i class="fa-solid fa-masks-theater"></i> Kebiasaan & Budaya</strong>
+                        <span>${data.culture}</span>
+                    </div>
+                </div>
+            `;
+            addPoints(3);
+        }
+
+        /* ==========================================
+           AKTIVITAS INTERAKTIF
+           ========================================== */
+        function switchActivityTab(tabNum) {
+            playSound('click');
+            for (let i = 1; i <= 3; i++) {
+                const act = document.getElementById(`activity-${i}`);
+                const btn = document.getElementById(`act-tab-${i}`);
+                if (i === tabNum) {
+                    act.classList.remove('hidden');
+                    btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white";
+                } else {
+                    act.classList.add('hidden');
+                    btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
+                }
+            }
+        }
+
+        // Aktivitas 1: Cocokkan
+        const matchingPairs = [
+            { id: 1, geo: "Pantai / Pesisir", options: ["Nelayan", "Petani Perkebunan Teh", "Pegawai Kantor"], correct: 0 },
+            { id: 2, geo: "Pegunungan Tinggi", options: ["Nelayan", "Petani Perkebunan / Sayur", "Pedagang Laut"], correct: 1 },
+            { id: 3, geo: "Perkotaan / Dataran Rendah", options: ["Perdagangan & Jasa", "Meramu Sagu", "Pencari Mutiara Laut Dalam"], correct: 0 },
+            { id: 4, geo: "Aliran Sungai Besar", options: ["Petani Sayur Dingin", "Perikanan Air Tawar & Transportasi Air", "Pegawai Tambang Es"], correct: 1 }
+        ];
+
+        function renderMatchingActivity() {
+            const container = document.getElementById('matching-activity-container');
+            if (container.children.length > 0) return;
+            container.innerHTML = "";
+            matchingPairs.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3";
+                div.innerHTML = `
+                    <span class="text-sm font-bold text-slate-800"><i class="fa-solid fa-location-dot text-indigo-600 mr-2"></i> ${item.geo}</span>
+                    <select id="match-sel-${idx}" class="p-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">-- Pilih Mata Pencaharian --</option>
+                        ${item.options.map((opt, oIdx) => `<option value="${oIdx}">${opt}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function checkMatchingActivity() {
+            playSound('click');
+            let correctCount = 0;
+            matchingPairs.forEach((item, idx) => {
+                const sel = document.getElementById(`match-sel-${idx}`).value;
+                if (parseInt(sel) === item.correct) correctCount++;
+            });
+            const fb = document.getElementById('matching-feedback');
+            if (correctCount === matchingPairs.length) {
+                fb.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check"></i> ✅ Benar! Semua hubungan kondisi geografis dan mata pencaharian sudah tepat. (+10 Poin)</span>`;
+                playSound('correct');
+                addPoints(10);
+            } else {
+                fb.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> ❌ Belum tepat (${correctCount}/${matchingPairs.length} benar). Coba perhatikan kembali kondisi geografisnya!</span>`;
+                playSound('wrong');
+            }
+        }
+
+        // Aktivitas 2: Kelompokkan
+        const categorizeItems = [
+            { text: "Pembagian kelompok suku bangsa (Jawa, Batak, Papua)", cat: "sosial" },
+            { text: "Upacara adat pernikahan dan tradisi turun-temurun", cat: "budaya" },
+            { text: "Struktur organisasi kemasyarakatan di desa", cat: "sosial" },
+            { text: "Alat musik tradisional Angklung dan Sasando", cat: "budaya" },
+            { text: "Rumah adat tradisional dan pakaian daerah", cat: "budaya" }
+        ];
+
+        function renderCategorizeActivity() {
+            const container = document.getElementById('categorize-activity-container');
+            if (container.children.length > 0) return;
+            container.innerHTML = "";
+            categorizeItems.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3";
+                div.innerHTML = `
+                    <span class="text-sm text-slate-800">${item.text}</span>
+                    <select id="cat-sel-${idx}" class="p-2 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">-- Pilih Kategori --</option>
+                        <option value="sosial">Keragaman Sosial</option>
+                        <option value="budaya">Keragaman Budaya</option>
+                    </select>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function checkCategorizeActivity() {
+            playSound('click');
+            let correctCount = 0;
+            categorizeItems.forEach((item, idx) => {
+                const val = document.getElementById(`cat-sel-${idx}`).value;
+                if (val === item.cat) correctCount++;
+            });
+            const fb = document.getElementById('categorize-feedback');
+            if (correctCount === categorizeItems.length) {
+                fb.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check"></i> ✅ Sempurna! Pengelompokan keragaman sosial dan budaya sudah tepat. (+10 Poin)</span>`;
+                playSound('correct');
+                addPoints(10);
+            } else {
+                fb.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> ❌ Belum tepat (${correctCount}/${categorizeItems.length} benar). Periksa kembali pilihannya!</span>`;
+                playSound('wrong');
+            }
+        }
+
+        function submitCaseStudy() {
+            const ans = document.getElementById('case-study-answer').value.trim();
+            if (!ans) {
+                showToast("Mohon tuliskan analisis jawabanmu terlebih dahulu!", "error");
+                return;
+            }
+            document.getElementById('case-study-result').classList.remove('hidden');
+            playSound('success');
+            addPoints(10);
+            showToast("Analisis berhasil dikirim! Poin ditambahkan.", "success");
+        }
+
+        /* ==========================================
+           LATIHAN SOAL (Practice)
+           ========================================== */
+        function switchPracticeTab(tab) {
+            playSound('click');
+            ['pg', 'bs', 'isian'].forEach(t => {
+                const container = document.getElementById(`practice-${t}-container`);
+                const btn = document.getElementById(`prac-tab-${t}`);
+                if (t === tab) {
+                    container.classList.remove('hidden');
+                    btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition bg-indigo-600 text-white";
+                } else {
+                    container.classList.add('hidden');
+                    btn.className = "px-3 py-1.5 rounded-xl text-xs font-bold transition bg-slate-100 text-slate-600 hover:bg-slate-200";
+                }
+            });
+        }
+
+        function renderPracticeContent() {
+            // PG
+            const pgCont = document.getElementById('practice-pg-container');
+            if (pgCont.children.length === 0) {
+                practicePG.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = "p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3";
+                    div.innerHTML = `
+                        <p class="font-heading font-semibold text-sm text-slate-800">${idx + 1}. ${item.q}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="pg-opts-${idx}">
+                            ${item.opts.map((opt, oIdx) => `
+                                <label class="p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 cursor-pointer text-xs flex items-center gap-2 transition">
+                                    <input type="radio" name="prac_pg_${idx}" value="${oIdx}" class="text-indigo-600">
+                                    <span>${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    `;
+                    pgCont.appendChild(div);
+                });
+            }
+
+            // BS
+            const bsCont = document.getElementById('practice-bs-container');
+            if (bsCont.children.length === 0) {
+                practiceBS.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = "p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3";
+                    div.innerHTML = `
+                        <p class="font-heading font-semibold text-sm text-slate-800">${idx + 1}. ${item.q}</p>
+                        <div class="flex gap-4">
+                            <label class="px-4 py-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-xs flex items-center gap-2">
+                                <input type="radio" name="prac_bs_${idx}" value="true" class="text-indigo-600"> Benar
+                            </label>
+                            <label class="px-4 py-2 rounded-xl border border-slate-200 bg-white cursor-pointer text-xs flex items-center gap-2">
+                                <input type="radio" name="prac_bs_${idx}" value="false" class="text-indigo-600"> Salah
+                            </label>
+                        </div>
+                    `;
+                    bsCont.appendChild(div);
+                });
+            }
+
+            // Isian
+            const isianCont = document.getElementById('practice-isian-container');
+            if (isianCont.children.length === 0) {
+                practiceIsian.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = "p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3";
+                    div.innerHTML = `
+                        <p class="font-heading font-semibold text-sm text-slate-800">${idx + 1}. ${item.q}</p>
+                        <input type="text" id="prac_isian_${idx}" placeholder="Jawaban singkat..." class="w-full sm:w-1/2 p-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    `;
+                    isianCont.appendChild(div);
+                });
+            }
+        }
+
+        function submitPractice() {
+            playSound('click');
+            let totalCorrect = 0;
+            let totalItems = practicePG.length + practiceBS.length + practiceIsian.length;
+
+            // Check PG
+            practicePG.forEach((item, idx) => {
+                const sel = document.querySelector(`input[name="prac_pg_${idx}"]:checked`);
+                if (sel && parseInt(sel.value) === item.ans) totalCorrect++;
+            });
+            // Check BS
+            practiceBS.forEach((item, idx) => {
+                const sel = document.querySelector(`input[name="prac_bs_${idx}"]:checked`);
+                if (sel && (sel.value === 'true') === item.ans) totalCorrect++;
+            });
+            // Check Isian
+            practiceIsian.forEach((item, idx) => {
+                const val = document.getElementById(`prac_isian_${idx}`).value.trim().toLowerCase();
+                if (val === item.ans) totalCorrect++;
+            });
+
+            const score = Math.round((totalCorrect / totalItems) * 100);
+            state.scores.latihan = score;
+            localStorage.setItem('ips_score_latihan', score);
+            document.getElementById('practice-score-display').innerText = `Nilai Latihan: ${score} (${totalCorrect}/${totalItems} Benar)`;
+            addPoints(20);
+            showToast(`Latihan selesai! Nilai kamu: ${score}`, "success");
+        }
+
+        /* ==========================================
+           KUIS INTERAKTIF
+           ========================================== */
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let quizTimerInterval = null;
+        let timeLeft = 60;
+
+        function startQuiz() {
+            playSound('click');
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-start-screen').classList.add('hidden');
+            document.getElementById('quiz-result-screen').classList.add('hidden');
+            document.getElementById('quiz-question-screen').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        function loadQuizQuestion() {
+            if (currentQuizIndex >= quizQuestions.length) {
+                endQuiz();
+                return;
+            }
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-progress-label').innerText = `Soal ${currentQuizIndex + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quiz-question-text').innerText = q.q;
+            document.getElementById('quiz-feedback').innerText = "";
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+
+            const container = document.getElementById('quiz-options-container');
+            container.innerHTML = "";
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-500 hover:bg-indigo-50 text-left text-sm font-medium transition shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => selectQuizAnswer(idx, btn);
+                container.appendChild(btn);
+            });
+
+            // Reset Timer
+            clearInterval(quizTimerInterval);
+            timeLeft = 60;
+            document.getElementById('time-left').innerText = timeLeft;
+            quizTimerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('time-left').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimerInterval);
+                    selectQuizAnswer(-1, null); // Timeout
+                }
+            }, 1000);
+        }
+
+        function selectQuizAnswer(selectedIdx, btnElement) {
+            clearInterval(quizTimerInterval);
+            const q = quizQuestions[currentQuizIndex];
+            const options = document.getElementById('quiz-options-container').children;
+
+            for (let b of options) {
+                b.disabled = true;
+            }
+
+            const fb = document.getElementById('quiz-feedback');
+            if (selectedIdx === q.ans) {
+                quizScore += Math.round(100 / quizQuestions.length);
+                if (btnElement) btnElement.className = "p-4 rounded-xl border border-emerald-500 bg-emerald-50 text-emerald-800 text-left text-sm font-bold shadow-sm";
+                fb.innerHTML = `<span class="text-emerald-600"><i class="fa-solid fa-circle-check"></i> Benar!</span>`;
+                playSound('correct');
+            } else {
+                if (btnElement) btnElement.className = "p-4 rounded-xl border border-rose-500 bg-rose-50 text-rose-800 text-left text-sm font-bold shadow-sm";
+                if (options[q.ans]) options[q.ans].className = "p-4 rounded-xl border border-emerald-500 bg-emerald-50 text-emerald-800 text-left text-sm font-bold shadow-sm";
+                fb.innerHTML = `<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> Kurang tepat.</span>`;
+                playSound('wrong');
+            }
+
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            playSound('click');
+            currentQuizIndex++;
+            loadQuizQuestion();
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-question-screen').classList.add('hidden');
+            document.getElementById('quiz-result-screen').classList.remove('hidden');
+            document.getElementById('quiz-final-score').innerText = `Skor: ${quizScore}`;
+            
+            state.scores.kuis = quizScore;
+            localStorage.setItem('ips_score_kuis', quizScore);
+            addPoints(30);
+
+            const catBadge = document.getElementById('quiz-category-badge');
+            if (quizScore >= 90) catBadge.innerText = "Sangat Baik 🏆";
+            else if (quizScore >= 80) catBadge.innerText = "Baik 👍";
+            else if (quizScore >= 70) catBadge.innerText = "Cukup 📚";
+            else catBadge.innerText = "Perlu Belajar Lagi 💪";
+        }
+
+        function resetQuiz() {
+            startQuiz();
+        }
+
+        /* ==========================================
+           GAME EDUKATIF ("Jelajah Keragaman Indonesia")
+           ========================================== */
+        let gameScore = 0;
+        let gameLives = 3;
+        const gameQuestions = [
+            { q: "Wilayah manakah di Indonesia yang cocok untuk kegiatan perkebunan teh dan sayur?", opts: ["Pantai", "Pegunungan", "Laut Lepas", "Gurun"], ans: 1 },
+            { q: "Rumah adat Honai berasal dari wilayah...", opts: ["Papua", "Sumatra", "Jawa", "Bali"], ans: 0 },
+            { q: "Mata pencaharian utama penduduk di daerah pesisir pantai adalah...", opts: ["Nelayan", "Petani teh", "Pegawai pabrik es", "Petani kopi"], ans: 0 },
+            { q: "Suku Minangkabau terkenal dengan rumah adatnya yang disebut...", opts: ["Rumah Gadang", "Joglo", "Tongkonan", "Baileo"], ans: 0 },
+            { q: "Alat musik petik Sasando berasal dari...", opts: ["Rote, NTT", "Bandung", "Surabaya", "Ambon"], ans: 0 }
+        ];
+        let currentGameIdx = 0;
+
+        function startMiniGame() {
+            playSound('click');
+            gameScore = 0;
+            gameLives = 3;
+            currentGameIdx = 0;
+            document.getElementById('game-start-area').classList.add('hidden');
+            document.getElementById('game-over-area').classList.add('hidden');
+            document.getElementById('game-play-area').classList.remove('hidden');
+            document.getElementById('game-score').innerText = gameScore;
+            document.getElementById('game-lives').innerText = "❤️❤️❤️";
+            loadGameQuestion();
+        }
+
+        function loadGameQuestion() {
+            if (currentGameIdx >= gameQuestions.length || gameLives <= 0) {
+                endMiniGame();
+                return;
+            }
+            const q = gameQuestions[currentGameIdx];
+            document.getElementById('game-question-text').innerText = q.q;
+            const container = document.getElementById('game-options-container');
+            container.innerHTML = "";
+            q.opts.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-xl border border-slate-200 bg-white hover:border-indigo-500 hover:bg-indigo-50 text-left text-sm font-medium transition shadow-sm";
+                btn.innerText = opt;
+                btn.onclick = () => selectGameAnswer(idx, q.ans);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectGameAnswer(selected, correct) {
+            if (selected === correct) {
+                gameScore += 20;
+                document.getElementById('game-score').innerText = gameScore;
+                playSound('correct');
+                showToast("Jawaban Benar! +20 Poin", "success");
+                addPoints(10);
+            } else {
+                gameLives--;
+                document.getElementById('game-lives').innerText = "❤️".repeat(gameLives) + "🖤".repeat(3 - gameLives);
+                playSound('wrong');
+                showToast("Jawaban Salah! Kehilangan 1 nyawa.", "error");
+            }
+            currentGameIdx++;
+            setTimeout(loadGameQuestion, 1000);
+        }
+
+        function endMiniGame() {
+            document.getElementById('game-play-area').classList.add('hidden');
+            document.getElementById('game-over-area').classList.remove('hidden');
+            document.getElementById('game-over-title').innerText = gameLives > 0 ? "🏆 Kamu Menang!" : "❌ Game Over!";
+            document.getElementById('game-over-desc').innerText = `Skor Akhir Kamu: ${gameScore}`;
+        }
+
+        /* ==========================================
+           REFLEKSI
+           ========================================== */
+        function saveReflection() {
+            playSound('click');
+            const r1 = document.getElementById('refleksi-1').value;
+            const r2 = document.getElementById('refleksi-2').value;
+            const r3 = document.getElementById('refleksi-3').value;
+            const r4 = document.getElementById('refleksi-4').value;
+            if (!r1 && !r2) {
+                showToast("Mohon isi beberapa pertanyaan refleksi terlebih dahulu!", "error");
+                return;
+            }
+            localStorage.setItem('ips_refleksi_1', r1);
+            localStorage.setItem('ips_refleksi_2', r2);
+            localStorage.setItem('ips_refleksi_3', r3);
+            localStorage.setItem('ips_refleksi_4', r4);
+            addPoints(15);
+            showToast("Refleksi berhasil disimpan! Terima kasih atas refleksi belajarmu.", "success");
+        }
+
+        /* ==========================================
+           EVALUASI AKHIR (20 Soal)
+           ========================================== */
+        function startEvaluation() {
+            playSound('click');
+            document.getElementById('eval-start-btn').classList.add('hidden');
+            document.getElementById('evaluation-result-box').classList.add('hidden');
+            const container = document.getElementById('evaluation-container');
+            container.classList.remove('hidden');
+            container.innerHTML = "";
+
+            evalQuestions.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = "p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3";
+                div.innerHTML = `
+                    <p class="font-heading font-semibold text-sm text-slate-800">${idx + 1}. ${item.q}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${item.opts.map((opt, oIdx) => `
+                            <label class="p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-400 cursor-pointer text-xs flex items-center gap-2 transition">
+                                <input type="radio" name="eval_q_${idx}" value="${oIdx}" class="text-indigo-600">
+                                <span>${opt}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+
+            const submitBtn = document.createElement('button');
+            submitBtn.className = "bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-8 rounded-xl text-sm transition shadow flex items-center gap-2 mx-auto mt-8";
+            submitBtn.innerHTML = `<i class="fa-solid fa-check-double"></i> Selesai & Kirim Evaluasi`;
+            submitBtn.onclick = submitEvaluation;
+            container.appendChild(submitBtn);
+        }
+
+        function submitEvaluation() {
+            playSound('click');
+            let correct = 0;
+            evalQuestions.forEach((item, idx) => {
+                const sel = document.querySelector(`input[name="eval_q_${idx}"]:checked`);
+                if (sel && parseInt(sel.value) === item.ans) correct++;
+            });
+            const wrong = evalQuestions.length - correct;
+            const score = Math.round((correct / evalQuestions.length) * 100);
+
+            state.scores.evaluasi = score;
+            localStorage.setItem('ips_score_evaluasi', score);
+            addPoints(50);
+
+            document.getElementById('evaluation-container').classList.add('hidden');
+            const box = document.getElementById('evaluation-result-box');
+            box.classList.remove('hidden');
+
+            document.getElementById('eval-score-text').innerText = `Nilai: ${score}`;
+            document.getElementById('eval-correct-count').innerText = correct;
+            document.getElementById('eval-wrong-count').innerText = wrong;
+            document.getElementById('eval-percent-text').innerText = score + '%';
+            
+            const isTuntas = score >= state.kkm;
+            const statusText = document.getElementById('eval-status-text');
+            statusText.innerText = isTuntas ? "TUNTAS 🎉" : "BELUM TUNTAS 💪";
+            statusText.className = isTuntas ? "text-lg text-emerald-600 font-bold" : "text-lg text-rose-600 font-bold";
+            document.getElementById('eval-message-text').innerText = isTuntas ? "Luar biasa! Kamu telah menguasai materi BAB 1 dengan sangat baik." : "Tetap semangat! Pelajari kembali materinya dan coba ulangi evaluasi.";
+        }
+
+        /* ==========================================
+           HASIL BELAJAR & DASHBOARD SISWA
+           ========================================== */
+        function loadStudentDashboard() {
+            document.getElementById('dash-name').innerText = state.studentName || "Belum diatur";
+            document.getElementById('dash-class').innerText = state.studentClass || "VIII";
+            
+            const l = state.scores.latihan;
+            const k = state.scores.kuis;
+            const e = state.scores.evaluasi;
+
+            document.getElementById('dash-score-latihan').innerText = l !== null ? l : "-";
+            document.getElementById('dash-score-kuis').innerText = k !== null ? k : "-";
+            document.getElementById('dash-score-evaluasi').innerText = e !== null ? e : "-";
+
+            let count = 0, sum = 0;
+            if (l !== null) { sum += l; count++; }
+            if (k !== null) { sum += k; count++; }
+            if (e !== null) { sum += e; count++; }
+
+            const avg = count > 0 ? Math.round(sum / count) : "-";
+            document.getElementById('dash-score-avg').innerText = avg;
+            document.getElementById('dash-kkm-val').innerText = state.kkm;
+
+            const kkmStatus = document.getElementById('dash-kkm-status');
+            if (avg !== "-" && avg >= state.kkm) {
+                kkmStatus.innerText = "TUNTAS 🎉";
+                kkmStatus.className = "text-base font-bold text-emerald-600";
+            } else {
+                kkmStatus.innerText = "BELUM TUNTAS";
+                kkmStatus.className = "text-base font-bold text-amber-600";
+            }
+
+            document.getElementById('dash-points-badge').innerText = `${state.points} Poin (${state.badge})`;
+        }
+
+        /* ==========================================
+           MODE GURU
+           ========================================== */
+        function loadTeacherDashboard() {
+            document.getElementById('teacher-school-label').innerText = window.TEACHER_CONFIG.schoolName;
+            document.getElementById('teacher-name-label').innerText = window.TEACHER_CONFIG.teacherName;
+            document.getElementById('teacher-kkm-input').value = state.kkm;
+
+            const tbody = document.getElementById('teacher-table-body');
+            if (!state.studentName) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Belum ada data siswa tersimpan. Silakan masukkan nama di Beranda.</td></tr>`;
+                return;
+            }
+
+            const l = state.scores.latihan !== null ? state.scores.latihan : "-";
+            const k = state.scores.kuis !== null ? state.scores.kuis : "-";
+            const e = state.scores.evaluasi !== null ? state.scores.evaluasi : "-";
+            let count = 0, sum = 0;
+            if (state.scores.latihan !== null) { sum += state.scores.latihan; count++; }
+            if (state.scores.kuis !== null) { sum += state.scores.kuis; count++; }
+            if (state.scores.evaluasi !== null) { sum += state.scores.evaluasi; count++; }
+            const avg = count > 0 ? Math.round(sum / count) : "-";
+            const isTuntas = avg !== "-" && avg >= state.kkm;
+
+            tbody.innerHTML = `
+                <tr class="border-b border-slate-100 hover:bg-slate-50">
+                    <td class="p-3 font-bold text-slate-800">${state.studentName}</td>
+                    <td class="p-3">${state.studentClass}</td>
+                    <td class="p-3">${l}</td>
+                    <td class="p-3">${k}</td>
+                    <td class="p-3">${e}</td>
+                    <td class="p-3 font-bold text-indigo-600">${avg}</td>
+                    <td class="p-3"><span class="px-2.5 py-1 rounded-full text-xs font-bold ${isTuntas ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">${isTuntas ? 'Tuntas' : 'Belum'}</span></td>
+                </tr>
+            `;
+        }
+
+        function updateTeacherKKM() {
+            const val = parseInt(document.getElementById('teacher-kkm-input').value);
+            if (isNaN(val) || val < 0 || val > 100) {
+                showToast("Masukkan nilai KKM yang valid antara 0 - 100", "error");
+                return;
+            }
+            state.kkm = val;
+            localStorage.setItem('ips_kkm', val);
+            showToast(`KKM berhasil diperbarui menjadi ${val}`, "success");
+            loadTeacherDashboard();
+        }
+
+        function resetAllStudentData() {
+            if (confirm("Apakah kamu yakin ingin mereset seluruh data belajar dan nilai?")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        function printTeacherReport() {
+            window.print();
+        }
+
+        // Initialize App on load
+        window.onload = function() {
+            if (state.studentName) {
+                const nameInput = document.getElementById('student-name-input');
+                if (nameInput) nameInput.value = state.studentName;
+            }
+            if (state.studentClass) {
+                const classInput = document.getElementById('student-class-input');
+                if (classInput) classInput.value = state.studentClass;
+            }
+            updateProgressUI();
+        };
+    </script>
+</body>
+</html>
